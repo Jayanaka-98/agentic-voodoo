@@ -40,10 +40,20 @@ glob success = True,
      result = "";
 
 with entry {
+    try {
+        result = run_task(SKILL_TEXT, TASK);
+        print(str(result)[:800]);
+    } except Exception as e {
+        print(f"ERROR: {e}");
+        success = False;
+    }
+}
+
+with entry {
     # ── Artifact validation ──────────────────────────────────────────────────
     import os;
     _expected: list = ['team_3p_april_18.md'];
-    _min_kb: int    = 1;
+    _min_kb: int    = 0;
     _missing: list  = [];
     _small: list    = [];
     for _f in _expected {

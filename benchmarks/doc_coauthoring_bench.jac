@@ -59,6 +59,16 @@ glob success = True,
      result = "";
 
 with entry {
+    try {
+        result = run_task(SKILL_TEXT, TASK);
+        print(str(result)[:800]);
+    } except Exception as e {
+        print(f"ERROR: {e}");
+        success = False;
+    }
+}
+
+with entry {
     # ── Artifact validation ──────────────────────────────────────────────────
     import os;
     _expected: list = ['auth_spec_v1.md'];
