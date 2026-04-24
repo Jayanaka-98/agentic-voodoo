@@ -205,3 +205,39 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# Jac build cache
+.jac/
+**/.jac/
+
+# MCP config (local only)
+.mcp.json
+
+# Benchmark run outputs (generated artifacts)
+context_breakdown.json
+*_results.json
+*_runs.jsonl
+benchmarks/results/
+
+# Benchmark task output files (produced by agents during runs)
+team_3p_april_18.md
+q1_sales_report.pdf
+greenflow_pitch.pptx
+saas_financial_model.xlsx
+mobile_banking_proposal.docx
+support_agent.py
+github_mcp/
+tests/test_checkout.py
+tests/pages.py
+logcraft_landing/
+deep_ocean_currents/
+rocket_launch.gif
+obsidian_pro/
+nexus_pay_brand_guidelines.md
+auth_spec_v1.md
+data_analyst/
+pomodoro_timer.html
+neon_equinox/
+
+# Skill examples reference files copied during runs
+examples/3p-updates.md
