@@ -175,12 +175,3 @@ export OPENAI_API_KEY=sk-...
 ./run_multi.sh    # 5 runs each for aggregate stats
 python compare.py
 ```
-
----
-
-## Stack
-
-- **[Jac](https://github.com/Jaseci-Labs/jaseci)** — Object-Spatial Programming language (nodes, edges, walkers, typed graph traversal)
-- **[byLLM](https://github.com/Jaseci-Labs/jaseci/tree/main/jac-byllm)** — declarative LLM function plugin for Jac (`by llm()` syntax, structured output, ReAct tool use)
-- **[LiteLLM](https://github.com/BerriAI/litellm)** — provider-agnostic LLM calls + `CustomLogger` hooks for measurement
-- **[tiktoken](https://github.com/openai/tiktoken)** — exact token counting per message segment
