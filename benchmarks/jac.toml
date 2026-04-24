@@ -1,0 +1,6 @@
+[byllm]
+default_model = "gpt-4o-mini"
+temperature = 0.0
+max_tokens = 4096
+local_cost_map = true
+drop_params = true

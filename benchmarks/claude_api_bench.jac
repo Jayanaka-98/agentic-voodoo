@@ -1,0 +1,69 @@
+"""Benchmark: claude-api skill — end-to-end task baseline measurement."""
+
+import from measure { setup, show_results, show_context_breakdown }
+import from tools { execute_python, bash, write_file, read_file }
+
+glob SKILL_TEXT: str = open("skills/skills/claude-api/SKILL.md").read();
+
+glob TASK: str = """Build a Python customer support agent using the Claude API.
+
+Requirements:
+- Script: support_agent.py
+- Takes a customer support ticket (subject + body) as input
+- Uses prompt caching for the system prompt (support guidelines, ~500 words) to reduce cost
+- Classifies ticket urgency (low/medium/high) using structured output
+- Generates a professional response using claude-sonnet-4-6
+- Logs token usage and cache hit rate to stdout
+- Handles API errors gracefully with retry logic (3 attempts, exponential backoff)
+- Include a test that runs the agent with a sample ticket about a billing issue
+- Save as support_agent.py and show example output""";
+
+"""Execute the skill instructions to complete the user's task using available tools."""
+def run_task(skill_text: str, user_task: str) -> str by llm(
+    tools=[execute_python, bash, write_file, read_file],
+    max_react_iterations=25
+);
+
+sem run_task = "Follow skill_text instructions precisely to complete user_task end-to-end. Write, test, and verify the code artifact.";
+sem run_task.skill_text = "Complete skill instructions defining the Claude API, SDK usage patterns, and best practices.";
+sem run_task.user_task = "The specific application the user wants built, with all technical requirements.";
+
+with entry {
+    setup();
+    print("=== BENCHMARK: claude-api ===");
+    print(f"Skill size: {len(SKILL_TEXT)} chars");
+    print(f"Task: {TASK[:120]}...\n");
+}
+
+glob success = True,
+     result = "";
+
+with entry {
+    # ── Artifact validation ──────────────────────────────────────────────────
+    import os;
+    _expected = ['support_agent.py'];
+    _min_kb   = 2;
+    _missing, _small = [], [];
+    for _f in _expected {
+        if not os.path.exists(_f) {
+            _missing.append(_f);
+        } elif os.path.getsize(_f) < _min_kb * 1024 {
+            _small.append(f"{_f} ({round(os.path.getsize(_f)/1024,1)} KB < {_min_kb} KB min)");
+        }
+    }
+    if _missing {
+        print(f"  VALIDATION FAILED — missing: {_missing}");
+        success = False;
+    }
+    if _small {
+        print(f"  VALIDATION FAILED — too small (empty artifact?): {_small}");
+        success = False;
+    }
+    if not _missing and not _small {
+        _sizes = {_f: f"{round(os.path.getsize(_f)/1024,1)} KB" for _f in _expected};
+        print(f"  VALIDATION PASSED — {_sizes}");
+    }
+
+    show_results("claude-api-baseline", success);
+    show_context_breakdown();
+}
