@@ -42,27 +42,31 @@ glob success = True,
 with entry {
     # ── Artifact validation ──────────────────────────────────────────────────
     import os;
-    _expected = ['team_3p_april_18.md'];
-    _min_kb   = 1;
-    _missing, _small = [], [];
+    _expected: list = ['team_3p_april_18.md'];
+    _min_kb: int    = 1;
+    _missing: list  = [];
+    _small: list    = [];
     for _f in _expected {
         if not os.path.exists(_f) {
             _missing.append(_f);
-        } elif os.path.getsize(_f) < _min_kb * 1024 {
-            _small.append(f"{_f} ({round(os.path.getsize(_f)/1024,1)} KB < {_min_kb} KB min)");
+        } else {
+            _raw: int  = os.path.getsize(_f);
+            _sz: float = _raw / 1024.0;
+            if _sz < _min_kb {
+                _small.append(f"{_f} ({_sz:.1f} KB < {_min_kb} KB min)");
+            }
         }
     }
     if _missing {
-        print(f"  VALIDATION FAILED — missing: {_missing}");
+        print(f"  VALIDATION FAILED - missing: {_missing}");
         success = False;
     }
     if _small {
-        print(f"  VALIDATION FAILED — too small (empty artifact?): {_small}");
+        print(f"  VALIDATION FAILED - too small: {_small}");
         success = False;
     }
     if not _missing and not _small {
-        _sizes = {_f: f"{round(os.path.getsize(_f)/1024,1)} KB" for _f in _expected};
-        print(f"  VALIDATION PASSED — {_sizes}");
+        print(f"  VALIDATION PASSED - {_expected}");
     }
 
     show_results("internal-comms-baseline", success);
