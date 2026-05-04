@@ -206,38 +206,64 @@ marimo/_static/
 marimo/_lsp/
 __marimo__/
 
+# ── Project-specific ─────────────────────────────────────────────────────────
+
 # Jac build cache
 .jac/
 **/.jac/
 
-# MCP config (local only)
+# Node artifacts (from web-artifacts-builder benchmark runs)
+node_modules/
+package.json
+package-lock.json
+
+# Local-only MCP config
 .mcp.json
 
-# Benchmark run outputs (generated artifacts)
+# ── Benchmark run outputs ─────────────────────────────────────────────────────
+# Keep markdown summaries (README.md, summary.md, per_skill.md) — they're the
+# analysis. Ignore raw data files (logs, JSON snapshots, JSONL records).
+
+# Raw run data inside results/ subdirectories
+benchmarks/results/**/*.log
+benchmarks/results/**/*.json
+benchmarks/results/**/*.jsonl
+
+# Pointer file regenerated each run
+benchmarks/results/latest.txt
+
+# Repo-root run artifacts (produced before being moved to results/)
 context_breakdown.json
 *_results.json
 *_runs.jsonl
-benchmarks/results/
 
-# Benchmark task output files (produced by agents during runs)
-team_3p_april_18.md
-q1_sales_report.pdf
-greenflow_pitch.pptx
-saas_financial_model.xlsx
-mobile_banking_proposal.docx
-support_agent.py
+# ── Agent-produced artifacts at repo root ────────────────────────────────────
+# Real benchmarks write real files. These are the expected output paths from
+# each per-skill task, dropped at the working directory (repo root) during runs.
+
+# Documents
+*.pdf
+*.docx
+*.pptx
+*.xlsx
+*.gif
+
+# Per-skill output directories created by benchmarks
 github_mcp/
-tests/test_checkout.py
-tests/pages.py
+tests/
 logcraft_landing/
 deep_ocean_currents/
-rocket_launch.gif
 obsidian_pro/
+data_analyst/
+neon_equinox/
+pomodoro-timer/
+pomodoro_timer.html
+
+# Loose script outputs from benchmarks
+support_agent.py
+team_3p_april_18.md
 nexus_pay_brand_guidelines.md
 auth_spec_v1.md
-data_analyst/
-pomodoro_timer.html
-neon_equinox/
 
-# Skill examples reference files copied during runs
+# Skill reference files copied during a run by the agent
 examples/3p-updates.md
