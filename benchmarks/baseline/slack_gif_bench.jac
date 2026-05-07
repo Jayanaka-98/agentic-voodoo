@@ -1,9 +1,11 @@
 """Benchmark: slack-gif-creator skill — end-to-end task baseline measurement."""
 
-import from measure { setup, show_results, show_context_breakdown }
-import from tools { execute_python, bash, write_file, read_file }
+import os;
+import from ..lib.measure { setup, show_results, show_context_breakdown }
+import from ..lib.tools { execute_python, bash, write_file, read_file }
 
-glob SKILL_TEXT: str = open("skills/skills/slack-gif-creator/SKILL.md").read();
+glob _SKILLS_ROOT: str = os.environ.get("SKILLS_ROOT", "skills/anthropic/skills");
+glob SKILL_TEXT: str = open(f"{_SKILLS_ROOT}/slack-gif-creator/SKILL.md").read();
 
 glob TASK: str = """Create an animated Slack emoji GIF of a rocket ship launching.
 

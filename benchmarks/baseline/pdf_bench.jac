@@ -1,20 +1,20 @@
-"""Benchmark: xlsx skill — end-to-end task baseline measurement."""
+"""Benchmark: pdf skill — end-to-end task baseline measurement."""
 
-import from measure { setup, show_results, show_context_breakdown }
-import from tools { execute_python, bash, write_file, read_file }
+import os;
+import from ..lib.measure { setup, show_results, show_context_breakdown }
+import from ..lib.tools { execute_python, bash, write_file, read_file }
 
-glob SKILL_TEXT: str = open("skills/skills/xlsx/SKILL.md").read();
+glob _SKILLS_ROOT: str = os.environ.get("SKILLS_ROOT", "skills/anthropic/skills");
+glob SKILL_TEXT: str = open(f"{_SKILLS_ROOT}/pdf/SKILL.md").read();
 
-glob TASK: str = """Build a 3-year financial model spreadsheet for a SaaS startup.
+glob TASK: str = """Create a 3-page PDF report on Q1 2024 sales performance.
 
 Requirements:
-- Sheet 1 "Assumptions": ARR growth rate (80%, 60%, 45%), gross margin (72%), headcount growth
-- Sheet 2 "P&L": Monthly revenue, COGS, gross profit, OpEx, EBITDA for 2024-2026
-- Sheet 3 "Summary": Annual totals with YoY growth %, a chart of ARR progression
-- Color coding: input cells in light blue, formula cells in white, negative values in red
-- Formulas must reference Assumptions sheet (no hardcoded numbers in P&L)
-- Starting ARR: $1.2M in Jan 2024
-- Save as saas_financial_model.xlsx""";
+- Cover page with title, date, and company name "Acme Corp"
+- Summary table showing monthly revenue: Jan $120k, Feb $145k, Mar $162k
+- Key metrics section: total revenue $427k, 35% YoY growth, top product "Widget Pro"
+- Professional styling with a header on each page
+- Save as q1_sales_report.pdf""";
 
 """Execute the skill instructions to complete the user's task using available tools."""
 def run_task(skill_text: str, user_task: str) -> str by llm(
@@ -28,7 +28,7 @@ sem run_task.user_task = "The specific artifact the user wants created, with all
 
 with entry {
     setup();
-    print("=== BENCHMARK: xlsx ===");
+    print("=== BENCHMARK: pdf ===");
     print(f"Skill size: {len(SKILL_TEXT)} chars");
     print(f"Task: {TASK[:120]}...\n");
 }
@@ -49,7 +49,7 @@ with entry {
 with entry {
     # ── Artifact validation ──────────────────────────────────────────────────
     import os;
-    _expected: list = ['saas_financial_model.xlsx'];
+    _expected: list = ['q1_sales_report.pdf'];
     _min_kb: int    = 10;
     _missing: list  = [];
     _small: list    = [];
@@ -76,6 +76,6 @@ with entry {
         print(f"  VALIDATION PASSED - {_expected}");
     }
 
-    show_results("xlsx-baseline", success);
+    show_results("pdf-baseline", success);
     show_context_breakdown();
 }

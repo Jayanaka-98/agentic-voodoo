@@ -1,6 +1,3 @@
-[submodule "skills"]
-	path = skills
-	url = https://github.com/anthropics/skills.git
 [submodule "agentic_codebases/pi-mono"]
 	path = agentic_codebases/pi-mono
 	url = https://github.com/badlogic/pi-mono.git
@@ -13,3 +10,6 @@
 [submodule "agentic_codebases/openclaw"]
 	path = agentic_codebases/openclaw
 	url = https://github.com/openclaw/openclaw.git
+[submodule "skills/anthropic"]
+	path = skills/anthropic
+	url = https://github.com/anthropics/skills.git

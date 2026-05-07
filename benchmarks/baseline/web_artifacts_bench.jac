@@ -1,9 +1,11 @@
 """Benchmark: web-artifacts-builder skill — end-to-end task baseline measurement."""
 
-import from measure { setup, show_results, show_context_breakdown }
-import from tools { execute_python, bash, write_file, read_file }
+import os;
+import from ..lib.measure { setup, show_results, show_context_breakdown }
+import from ..lib.tools { execute_python, bash, write_file, read_file }
 
-glob SKILL_TEXT: str = open("skills/skills/web-artifacts-builder/SKILL.md").read();
+glob _SKILLS_ROOT: str = os.environ.get("SKILLS_ROOT", "skills/anthropic/skills");
+glob SKILL_TEXT: str = open(f"{_SKILLS_ROOT}/web-artifacts-builder/SKILL.md").read();
 
 glob TASK: str = """Build a single-page Pomodoro timer web app as a Claude artifact.
 
