@@ -1,0 +1,11 @@
+name = "pdf_agent"
+description = "Generate a PDF artifact end-to-end from a skill file."
+default_skill = "SKILL.md"
+default_task = """Create a 3-page PDF report on Q1 2024 sales performance.
+
+Requirements:
+- Cover page with title, date, and company name "Acme Corp"
+- Summary table showing monthly revenue: Jan $120k, Feb $145k, Mar $162k
+- Key metrics section: total revenue $427k, 35% YoY growth, top product "Widget Pro"
+- Professional styling with a header on each page
+- Save as q1_sales_report.pdf"""

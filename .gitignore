@@ -256,6 +256,7 @@ context_breakdown.json
 # Per-skill output directories created by benchmarks
 github_mcp/
 tests/
+!voodoo-bench/tests/
 logcraft_landing/
 deep_ocean_currents/
 obsidian_pro/

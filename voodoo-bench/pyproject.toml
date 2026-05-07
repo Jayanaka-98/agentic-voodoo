@@ -1,0 +1,54 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "voodoo-bench"
+version = "0.1.0"
+description = "A CLI bench runner for Jac/byLLM agents — point it at any agent directory, swap models freely (provider APIs or local vLLM), and capture every prompt and completion."
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "MIT" }
+authors = [{ name = "Jayanaka Dantanarayana", email = "jayanaka15@gmail.com" }]
+keywords = ["jac", "byllm", "benchmark", "llm", "agent", "vllm"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+dependencies = [
+    "jaseci",
+    "litellm>=1.50,<2",
+    "tiktoken>=0.7",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.23",
+]
+
+[project.scripts]
+voodoo-bench = "voodoo_bench.cli:main"
+vbench = "voodoo_bench.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/Jayanaka-98/agentic-voodoo"
+Issues = "https://github.com/Jayanaka-98/agentic-voodoo/issues"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["voodoo_bench*"]
+
+[tool.setuptools.package-data]
+voodoo_bench = ["*.jac", "templates/**/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra --strict-markers"
